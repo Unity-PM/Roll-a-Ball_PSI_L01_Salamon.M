@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SocialPlatforms.Impl;
+using TMPro;
 
 public class Collectible : MonoBehaviour
 {
@@ -21,8 +23,6 @@ public class Collectible : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         other.gameObject.GetComponent<MovementController>().score += 1;
-        Debug.Log("You scored a point!!!!");
-        Debug.Log("You have: " + m_player.GetComponent<MovementController>().score + " coins");
         m_coin.SetActive(false);
     }
     
