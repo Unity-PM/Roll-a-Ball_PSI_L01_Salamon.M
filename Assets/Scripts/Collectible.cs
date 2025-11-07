@@ -5,25 +5,30 @@ using TMPro;
 
 public class Collectible : MonoBehaviour
 {
-    public float m_rotate = 70;
-    public GameObject m_coin;
-    public GameObject m_player;
+    float m_rotate = 70;
+    AudioSource m_audioSource;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        m_audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_coin.transform.Rotate(0, Time.deltaTime* m_rotate, 0, Space.World);
+        gameObject.transform.Rotate(0, Time.deltaTime* m_rotate, 0, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<MovementController>().score += 1;
-        m_coin.SetActive(false);
+        other.gameObject.GetComponent<GameManager>().m_score += 1;
+        m_audioSource.Play();
+        Invoke(nameof(CoinCollected),0.2f);
     }
     
+    private void CoinCollected()
+    {
+        gameObject.SetActive(false);
+    }
 }

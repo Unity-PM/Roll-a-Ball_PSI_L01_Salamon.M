@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject m_camera;
-    private Vector3 m_transform;
+    GameObject m_camera;
+    Vector3 m_transform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        m_camera = GameObject.FindGameObjectWithTag("MainCamera");
         m_transform = m_camera.transform.position - transform.position;
     }
 

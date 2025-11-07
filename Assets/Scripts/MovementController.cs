@@ -1,5 +1,6 @@
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
@@ -12,6 +13,9 @@ public class MovementController : MonoBehaviour
     public TMP_Text t_score;
     public GameObject m_coin;
     public int score;
+    public int m_scene;
+    //float jumpForce = 20;
+    //int player_health = 100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,7 +24,16 @@ public class MovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.W))
+        InputHandler();
+    }
+
+    private void Update()
+    {
+
+    }
+    void InputHandler()
+    {
+        if (Input.GetKey(KeyCode.W))
         {
             m_player.AddForce(0, 0, m_speed);
         }
@@ -36,21 +49,14 @@ public class MovementController : MonoBehaviour
         {
             m_player.AddForce(m_speed, 0, 0);
         }
+        //if(Input.GetKey(KeyCode.Space))
+        //{
+        //    m_player.AddForce(0, jumpForce, 0);
+        //}
+        
     }
+    
 
-    private void Update()
-    {
-        OnCoinCollected(score);
-    }
 
-    public void OnCoinCollected(int score)
-    {
-        t_score.text = "Score: " + score + "/17";
-        if (score == 17)
-        {
-            t_allscored.text = "You won!!!";
-            SceneManager.LoadScene(2);
-        }
-    }
 
 }
