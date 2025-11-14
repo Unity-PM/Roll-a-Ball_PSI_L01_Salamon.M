@@ -7,15 +7,11 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class MovementController : MonoBehaviour
 {
-    public Rigidbody m_player;
-    public float m_speed = 20f;
-    public TMP_Text t_allscored;
-    public TMP_Text t_score;
-    public GameObject m_coin;
-    public int score;
-    public int m_scene;
-    //float jumpForce = 20;
-    //int player_health = 100;
+    Rigidbody m_player;
+    float m_speed = 17f;
+    float m_jump = 300f;
+    bool b_jump;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,10 +23,6 @@ public class MovementController : MonoBehaviour
         InputHandler();
     }
 
-    private void Update()
-    {
-
-    }
     void InputHandler()
     {
         if (Input.GetKey(KeyCode.W))
@@ -49,14 +41,25 @@ public class MovementController : MonoBehaviour
         {
             m_player.AddForce(m_speed, 0, 0);
         }
-        //if(Input.GetKey(KeyCode.Space))
-        //{
-        //    m_player.AddForce(0, jumpForce, 0);
-        //}
-        
+        if (Input.GetKey(KeyCode.Space) && b_jump == true) { m_player.AddForce(0, m_jump, 0);b_jump = false; }
     }
-    
 
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            b_jump = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "BadWall")
+        {
+            SceneManager.LoadScene(4);
+        }
+    }
 
 
 }

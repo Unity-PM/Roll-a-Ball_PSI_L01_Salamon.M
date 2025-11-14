@@ -3,8 +3,8 @@ using UnityEngine.UIElements;
 
 public class MapBehavior : MonoBehaviour
 {
-    public GameObject m_spiningwall;
-    public float m_rotate = 70;
+    GameObject m_spiningwall;
+    float m_rotate = 40;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

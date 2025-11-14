@@ -8,6 +8,8 @@ public class Collectible : MonoBehaviour
     float m_rotate = 70;
     AudioSource m_audioSource;
 
+    public static event System.Action CoinCollectedHandler;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,9 +24,11 @@ public class Collectible : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<GameManager>().m_score += 1;
         m_audioSource.Play();
         Invoke(nameof(CoinCollected),0.2f);
+        
+        CoinCollected();
+        CoinCollectedHandler?.Invoke();
     }
     
     private void CoinCollected()

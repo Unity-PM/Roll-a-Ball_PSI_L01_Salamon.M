@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 public class UIMenager : MonoBehaviour
 {
     GameObject panelTextOptions;
-    TMP_Text t_allscored;
-    TMP_Text t_score;
+    public TMP_Text t_score;
+
     public void Start()
     {
         panelTextOptions = GameObject.FindGameObjectWithTag("Options");
-        panelTextOptions.SetActive(false);
-        t_score = GetComponentInChildren<TMP_Text>();
+        panelTextOptions?.SetActive(false);
+        GameManager gameManager = FindFirstObjectByType<GameManager>();
+        gameManager.ScoreUpdate += Score;
     }
     public void OnClickStart()
     {

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Collectible
   - Options
+  - Spiningwall
+  - Floor
+  - BadWall
   layers:
   - Default
   - TransparentFX
