@@ -9,6 +9,8 @@ TagManager:
   - Spiningwall
   - Floor
   - BadWall
+  - PlatfromWall
+  - Platfrom
   layers:
   - Default
   - TransparentFX
