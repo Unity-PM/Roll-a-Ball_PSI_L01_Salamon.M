@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4523ed2e3bd1b73408d6a01afe1974d7, type: 2}
+  - {fileID: 2100000, guid: cba82170587eb1445b61e589240883d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,10 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c016a8b083cce469fee915c280f97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Collectible
-  m_rotate: 70
-  m_coin: {fileID: 5701200683918930260}
-  m_player: {fileID: 3315065211614924268, guid: 1a5a2d9a82d19b74bb8005fa159b46c0, type: 3}
-  m_audioSource: {fileID: 5973505429232701477}
 --- !u!82 &5973505429232701477
 AudioSource:
   m_ObjectHideFlags: 0

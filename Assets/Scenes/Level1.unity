@@ -868,8 +868,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0a36b6434030a44b599a6a32713f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  collectibles: []
   m_scorepossible: 0
-  m_score: 0
 --- !u!4 &1442617654
 Transform:
   m_ObjectHideFlags: 0
@@ -1680,7 +1680,7 @@ PrefabInstance:
     - target: {fileID: 1462120618718914309, guid: 22187470a6a116b40b29ba83185d91bf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: cba82170587eb1445b61e589240883d2, type: 2}
+      objectReference: {fileID: 2100000, guid: 3dac6aa6f999b2e47a2dce88d0851eb1, type: 2}
     - target: {fileID: 3334949480223952350, guid: 22187470a6a116b40b29ba83185d91bf, type: 3}
       propertyPath: m_Name
       value: Wall
@@ -1688,11 +1688,11 @@ PrefabInstance:
     - target: {fileID: 3529635550126515298, guid: 22187470a6a116b40b29ba83185d91bf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: cba82170587eb1445b61e589240883d2, type: 2}
+      objectReference: {fileID: 2100000, guid: 3dac6aa6f999b2e47a2dce88d0851eb1, type: 2}
     - target: {fileID: 5002630735779138764, guid: 22187470a6a116b40b29ba83185d91bf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: cba82170587eb1445b61e589240883d2, type: 2}
+      objectReference: {fileID: 2100000, guid: 3dac6aa6f999b2e47a2dce88d0851eb1, type: 2}
     - target: {fileID: 7809061550532257252, guid: 22187470a6a116b40b29ba83185d91bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
