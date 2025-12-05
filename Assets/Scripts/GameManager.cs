@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] collectibles;
     public int m_scorepossible; 
     int m_score = 0;
+    int activeScene;
 
     public delegate void ScoreUpdateHandler(int score, int possiblescore);
     public event Action<int, int> ScoreUpdate;
@@ -35,5 +36,16 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         Collectible.CoinCollectedHandler -= OnCoinCollected;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("BoxWall"))
+        {
+            Debug.Log("contact");
+            activeScene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(activeScene);
+
+        }
     }
 }
