@@ -11,6 +11,14 @@ TagManager:
   - BadWall
   - PlatfromWall
   - Platfrom
+  - BoxWall
+  - RowImage
+  - Savepoint
+  - TimerText
+  - DashImg
+  - DashImg2
+  - DoubleJump2
+  - DoubleJump
   layers:
   - Default
   - TransparentFX

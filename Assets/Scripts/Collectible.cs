@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
@@ -8,15 +9,13 @@ public class Collectible : MonoBehaviour
     float m_rotate = 70;
     AudioSource m_audioSource;
 
-    public static event System.Action CoinCollectedHandler;
+    public static event Action CoinCollectedHandler;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         m_audioSource = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         gameObject.transform.Rotate(0, Time.deltaTime* m_rotate, 0, Space.World);
@@ -25,10 +24,8 @@ public class Collectible : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         m_audioSource.Play();
-        Invoke(nameof(CoinCollected),0.2f);
-        
-        CoinCollected();
         CoinCollectedHandler?.Invoke();
+        Invoke(nameof(CoinCollected), 0.25f);
     }
     
     private void CoinCollected()

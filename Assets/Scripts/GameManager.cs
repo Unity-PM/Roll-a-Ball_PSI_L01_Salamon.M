@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,16 +11,31 @@ public class GameManager : MonoBehaviour
     public int m_scorepossible; 
     int m_score = 0;
     int activeScene;
+    GameObject m_savepoint;
+    MovementController m_movementcontroller;
+    int m_lifes = 3;
 
     public delegate void ScoreUpdateHandler(int score, int possiblescore);
     public event Action<int, int> ScoreUpdate;
+    public event Action<int> LifeUpdate;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         collectibles = GameObject.FindGameObjectsWithTag("Collectible");
         m_scorepossible = collectibles.Length;
         Collectible.CoinCollectedHandler += OnCoinCollected;
+        MovementController.BoxCollisionEnterHandler += OnBoxCollisionEnter;
+        m_savepoint = GameObject.FindGameObjectWithTag("Savepoint");
+        m_movementcontroller = FindFirstObjectByType<MovementController>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            activeScene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(activeScene);
+        }
     }
 
     public void OnCoinCollected()
@@ -31,21 +47,26 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(m_scene + 1);
         }
         ScoreUpdate?.Invoke(m_score, m_scorepossible);
-    }
 
+    }
     private void OnDisable()
     {
         Collectible.CoinCollectedHandler -= OnCoinCollected;
+        MovementController.BoxCollisionEnterHandler -= OnBoxCollisionEnter;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnBoxCollisionEnter()
     {
-        if(collision.gameObject.CompareTag("BoxWall"))
+        activeScene = SceneManager.GetActiveScene().buildIndex;
+        if (m_savepoint.GetComponent<Renderer>().enabled && m_lifes > 0)
         {
-            Debug.Log("contact");
-            activeScene = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(activeScene);
 
+            m_movementcontroller.m_player.transform.position = m_savepoint.transform.position;
+            m_lifes--;
+            LifeUpdate?.Invoke(m_lifes);
         }
+        else
+            SceneManager.LoadScene(activeScene);
     }
+    
 }
