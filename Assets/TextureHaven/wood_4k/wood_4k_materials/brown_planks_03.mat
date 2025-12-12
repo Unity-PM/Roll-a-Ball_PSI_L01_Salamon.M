@@ -48,12 +48,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 30.3, y: 30}
-        m_Offset: {x: 0.54, y: -0.48}
+        m_Scale: {x: 31.1, y: 30.4}
+        m_Offset: {x: 3.65, y: -0.69}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: abd8b80eedde66345949b50481229b9a, type: 3}
-        m_Scale: {x: 30.3, y: 30}
-        m_Offset: {x: 0.54, y: -0.48}
+        m_Scale: {x: 31.1, y: 30.4}
+        m_Offset: {x: 3.65, y: -0.69}
     - _OcclusionMap:
         m_Texture: {fileID: 2800000, guid: 8573f079a8bd7b248a021026902efe1a, type: 3}
         m_Scale: {x: 1, y: 1}
