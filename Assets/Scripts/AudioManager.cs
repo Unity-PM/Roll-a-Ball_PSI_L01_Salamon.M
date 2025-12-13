@@ -1,43 +1,46 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource;
-    private static AudioManager _instance = null;
+    public AudioSource musicSource;
+    private static AudioManager instance = null;
 
     public static AudioManager Instance
     { 
         get 
         {
-            if (_instance == null)
+            if (instance == null)
             {
-                _instance = FindAnyObjectByType<AudioManager>();
-                if (_instance != null)
+                instance = FindAnyObjectByType<AudioManager>();
+                if (instance != null)
                 {
                     GameObject singletone = new GameObject(typeof(AudioManager).ToString());
-                    _instance = singletone.AddComponent<AudioManager>();
+                    instance = singletone.AddComponent<AudioManager>();
                     DontDestroyOnLoad(singletone);
                 }
             }
-            return _instance;
+            return instance;
         }
     }
     void Awake()
     {
-        if (_instance == null)
+        if (instance == null)
         {
-            _instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (_instance != this)
-            Destroy(gameObject);
-            
+        else if (instance != this)
+            Destroy(gameObject);   
     }
 
-    private void Start()
+    private void Update()
     {
-        _instance.audioSource = audioSource;
-        audioSource.Play();
+        if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            Destroy(gameObject);
+        }
     }
+
 }

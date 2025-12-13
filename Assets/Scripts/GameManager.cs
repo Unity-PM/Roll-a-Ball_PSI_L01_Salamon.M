@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    int m_scene;
+    int sceneId;
     public GameObject[] collectibles;
-    public int m_scorepossible; 
-    int m_score = 0;
+    public int scorePossible; 
+    int score = 0;
     int activeScene;
-    GameObject m_savepoint;
-    MovementController m_movementcontroller;
-    int m_lifes = 3;
+    GameObject savepoint;
+    MovementController movementController;
+    int lifes = 3;
 
     public delegate void ScoreUpdateHandler(int score, int possiblescore);
     public event Action<int, int> ScoreUpdate;
@@ -22,12 +22,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         collectibles = GameObject.FindGameObjectsWithTag("Collectible");
-        m_scorepossible = collectibles.Length;
+        scorePossible = collectibles.Length;
         Collectible.CoinCollectedHandler += OnCoinCollected;
         MovementController.BoxCollisionEnterHandler += OnBoxCollisionEnter;
-        m_savepoint = GameObject.FindGameObjectWithTag("Savepoint");
-        m_movementcontroller = FindFirstObjectByType<MovementController>();
+        savepoint = GameObject.FindGameObjectWithTag("Savepoint");
+        movementController = FindFirstObjectByType<MovementController>();
     }
+
+    
 
     private void Update()
     {
@@ -40,13 +42,13 @@ public class GameManager : MonoBehaviour
 
     public void OnCoinCollected()
     {
-        m_score++;
-        if (m_score == m_scorepossible)
+        score++;
+        if (score == scorePossible)
         {
-            m_scene = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(m_scene + 1);
+            sceneId = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(sceneId + 1);
         }
-        ScoreUpdate?.Invoke(m_score, m_scorepossible);
+        ScoreUpdate?.Invoke(score, scorePossible);
 
     }
     private void OnDisable()
@@ -58,15 +60,17 @@ public class GameManager : MonoBehaviour
     private void OnBoxCollisionEnter()
     {
         activeScene = SceneManager.GetActiveScene().buildIndex;
-        if (m_savepoint.GetComponent<Renderer>().enabled && m_lifes > 0)
+        if (savepoint.GetComponent<Renderer>().enabled && lifes > 0)
         {
 
-            m_movementcontroller.m_player.transform.position = m_savepoint.transform.position;
-            m_lifes--;
-            LifeUpdate?.Invoke(m_lifes);
+            movementController.player.transform.position = savepoint.transform.position;
+            lifes--;
+            LifeUpdate?.Invoke(lifes);
         }
         else
             SceneManager.LoadScene(activeScene);
     }
     
+
+
 }

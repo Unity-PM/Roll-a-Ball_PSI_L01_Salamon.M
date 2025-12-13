@@ -9,23 +9,23 @@ using UnityEngine.UIElements;
 
 public class UIMenager : MonoBehaviour
 {
-    GameObject panelTextOptions;
-    public TMP_Text t_score;
+    GameObject Options;
+    public TMP_Text score;
     private GameManager gameManager;
-    public TMP_Text t_timer;
-    int i_time;
-    public TMP_Text t_savepoint;
-    public TMP_Text t_lifes;
-    public TMP_Text t_savepointcounter;
+    public TMP_Text timerText;
+    int timeSinceLevelStarted;
+    public TMP_Text savepointText;
+    public TMP_Text lifesText;
+    public TMP_Text savepointCounterText;
     RawImage dashImg;
-    RawImage dashImg2;
+    RawImage dashImgUnactive;
     RawImage dJumpImg;
-    RawImage dJumpImg2;
+    RawImage dJumpImgUnactive;
 
     public void Start()
     {
-        panelTextOptions = GameObject.FindGameObjectWithTag("Options");
-        panelTextOptions?.SetActive(false);
+        Options = GameObject.FindGameObjectWithTag("Options");
+        Options?.SetActive(false);
         gameManager = FindFirstObjectByType<GameManager>();
         gameManager.ScoreUpdate += Score;
         if (SceneManager.GetActiveScene().buildIndex == 2)
@@ -36,34 +36,33 @@ public class UIMenager : MonoBehaviour
             MovementController.DashUsed += DashImg;
             MovementController.DoubleJumpUsed += DJumpImg;
             dashImg = GameObject.Find("DashUI").GetComponent<RawImage>();
-            dashImg2 = GameObject.Find("DashUI2").GetComponent<RawImage>();
+            dashImgUnactive = GameObject.Find("DashUI2").GetComponent<RawImage>();
             dJumpImg = GameObject.Find("DoubleJumpUI").GetComponent<RawImage>();
-            dJumpImg2 = GameObject.Find("DoubleJumpUI2").GetComponent<RawImage>();
+            dJumpImgUnactive = GameObject.Find("DoubleJumpUI2").GetComponent<RawImage>();
         }
     }
     public void Update()
     {
         Timer();
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && IsGameScene())
         {
-            if (!panelTextOptions.activeInHierarchy) 
+            if (!Options.activeInHierarchy) 
                 RowInfoActive(true);
             else 
                 RowInfoActive(false);
         }
     }
-
     private void DJumpImg(bool obj)
     {
         if (obj)
         {
             dJumpImg.enabled = false;
-            dJumpImg2.enabled = true;
+            dJumpImgUnactive.enabled = true;
         }
         else
         {
             dJumpImg.enabled = true;
-            dJumpImg2.enabled = false;
+            dJumpImgUnactive.enabled = false;
         }
     }
 
@@ -72,19 +71,19 @@ public class UIMenager : MonoBehaviour
         if (obj)
         {
             dashImg.enabled = false;
-            dashImg2.enabled = true;
+            dashImgUnactive.enabled = true;
         }
         else
         {
             dashImg.enabled = true;
-            dashImg2.enabled = false;
+            dashImgUnactive.enabled = false;
         }
     }
 
     private void SavepointsCounter(int savepointcounter)
     {
         if (SceneManager.GetActiveScene().buildIndex == 2)
-            t_savepointcounter.text = savepointcounter.ToString();
+            savepointCounterText.text = savepointcounter.ToString();
     }
 
     
@@ -107,12 +106,12 @@ public class UIMenager : MonoBehaviour
     }
     public void SetOptionsActive(bool isActive)
     {
-        panelTextOptions.SetActive(isActive);
+        Options.SetActive(isActive);
     }
 
     public void OptionsQuit()
     {
-        panelTextOptions.SetActive(false);
+        Options.SetActive(false);
     }
     public void EndSceneRestart()
     {
@@ -121,15 +120,15 @@ public class UIMenager : MonoBehaviour
 
     public void Score(int score, int pointspossible)
     {
-        t_score.text = score + "/" + pointspossible;
+        this.score.text = score + "/" + pointspossible;
     }
 
     public void Timer()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2)
+        if (IsGameScene())
         {
-            i_time = (int)Time.timeSinceLevelLoad;
-            t_timer.text = (i_time / 60).ToString("00") + ":" + (i_time % 60).ToString("00");
+            timeSinceLevelStarted = (int)Time.timeSinceLevelLoad;
+            timerText.text = (timeSinceLevelStarted / 60).ToString("00") + ":" + (timeSinceLevelStarted % 60).ToString("00");
         }
     }
 
@@ -145,18 +144,22 @@ public class UIMenager : MonoBehaviour
 
     public void RowInfoActive(bool isActive)
     {
-        panelTextOptions.SetActive(isActive);
+        Options.SetActive(isActive);
     }
 
     public void SavepointEnabled()
     {
         if (SceneManager.GetActiveScene().buildIndex == 2)
-            t_savepoint.text = "Enabled";
+            savepointText.text = "Enabled";
     }
 
     public void Lifes(int lifes)
     {
-        t_lifes.text = lifes.ToString();
+        lifesText.text = lifes.ToString();
     }
 
+    private bool IsGameScene()
+    {
+        return (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2);
+    }
 }

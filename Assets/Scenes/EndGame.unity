@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   collectibles: []
-  m_scorepossible: 0
+  scorePossible: 0
 --- !u!4 &461710950
 Transform:
   m_ObjectHideFlags: 0
@@ -502,9 +502,9 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 4879c84e713bea54a8c6d64aee940a26, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.21
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1374,11 +1374,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a274f65988fa64ea913c607cd06373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIMenager
-  t_score: {fileID: 0}
-  t_timer: {fileID: 0}
-  t_savepoint: {fileID: 0}
-  t_lifes: {fileID: 0}
-  t_savepointcounter: {fileID: 0}
+  score: {fileID: 0}
+  timerText: {fileID: 0}
+  savepointText: {fileID: 0}
+  lifesText: {fileID: 0}
+  savepointCounterText: {fileID: 0}
 --- !u!4 &2059912086
 Transform:
   m_ObjectHideFlags: 0

@@ -6,24 +6,24 @@ using TMPro;
 
 public class Collectible : MonoBehaviour
 {
-    float m_rotate = 70;
-    AudioSource m_audioSource;
+    float rotate = 70;
+    AudioSource audioSource;
 
     public static event Action CoinCollectedHandler;
 
     void Start()
     {
-        m_audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        gameObject.transform.Rotate(0, Time.deltaTime* m_rotate, 0, Space.World);
+        gameObject.transform.Rotate(0, Time.deltaTime* rotate, 0, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        m_audioSource.Play();
+        audioSource.Play();
         CoinCollectedHandler?.Invoke();
         Invoke(nameof(CoinCollected), 0.25f);
     }

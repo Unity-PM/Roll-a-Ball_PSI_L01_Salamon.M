@@ -195,7 +195,7 @@ Shader "Vefects/SH_Vefects_VFX_BIRP_Trail_New"
 		}
 	}
 	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=19701

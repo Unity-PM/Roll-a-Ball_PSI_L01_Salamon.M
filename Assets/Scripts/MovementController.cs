@@ -7,20 +7,20 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class MovementController : MonoBehaviour
 {
-    public Rigidbody m_player;
+    public Rigidbody player;
     GameObject playerGameObj;
-    float m_speed = 20f;
-    float m_jump = 300f;
-    bool b_jump;
-    bool b_savepoint = true;
-    Vector3 m_dash = new Vector3(0,0,0);
-    Vector3 m_savepoint = new Vector3(0,0,0);
-    float m_timeDash;
-    float m_timeDJump;
+    float speed = 20f;
+    float jumpStrength = 300f;
+    bool jumpPossible;
+    bool savepointActive = true;
+    Vector3 dash = new Vector3(0,0,0);
+    Vector3 savepointPosition = new Vector3(0,0,0);
+    float timeDash;
+    float timeDJump;
     int savepointIndex = 2;
-    GameObject g_savepoint;
-    bool b_dashUsed = false;
-    bool b_doubleJumpUsed = false;
+    GameObject savepoint;
+    bool dashUsed = false;
+    bool doubleJumpUsed = false;
     Vector3 currentMovementInput;
 
     public static event Action BoxCollisionEnterHandler;
@@ -31,21 +31,21 @@ public class MovementController : MonoBehaviour
 
     void Start()
     {
-        m_player = GetComponent<Rigidbody>();
+        player = GetComponent<Rigidbody>();
         playerGameObj = GameObject.FindGameObjectWithTag("Player");
-        g_savepoint = GameObject.FindGameObjectWithTag("Savepoint");
+        savepoint = GameObject.FindGameObjectWithTag("Savepoint");
     }
 
     void Update()
     {
         InputHandler();
-        if (Time.timeSinceLevelLoad > m_timeDash)
+        if (Time.timeSinceLevelLoad > timeDash)
         {
             SkillStatusUpdate(false, DashUsed);
             
         }
 
-        if (Time.timeSinceLevelLoad > m_timeDJump)
+        if (Time.timeSinceLevelLoad > timeDJump)
         {
             SkillStatusUpdate(false, DoubleJumpUsed);
         }
@@ -60,7 +60,7 @@ public class MovementController : MonoBehaviour
     {
         if (currentMovementInput != Vector3.zero)
         {
-            m_player.AddForce(currentMovementInput * m_speed);
+            player.AddForce(currentMovementInput * speed);
         }
     }
 
@@ -104,14 +104,14 @@ public class MovementController : MonoBehaviour
                 Dash(1000f, 0, 0);
             }
         }
-        if (Input.GetKey(KeyCode.Space) && b_jump == true) 
+        if (Input.GetKey(KeyCode.Space) && jumpPossible == true) 
         {
-            m_player.AddForce(m_jump * Vector3.up, ForceMode.Force);
-            b_jump = false; 
+            player.AddForce(jumpStrength * Vector3.up, ForceMode.Force);
+            jumpPossible = false; 
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (b_savepoint)
+            if (savepointActive)
             {
                 GoToSavepoint();
             }
@@ -134,17 +134,17 @@ public class MovementController : MonoBehaviour
 
     private void Dash(float x, float y, float z)
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2 && Time.timeSinceLevelLoad > m_timeDash)
+        if (SceneManager.GetActiveScene().buildIndex == 2 && Time.timeSinceLevelLoad > timeDash)
         {
-            m_timeDash = Time.timeSinceLevelLoad+5;
-            b_dashUsed = true;
-            m_dash.y = y;
-            m_dash.x = x;
-            m_dash.z = z;
+            timeDash = Time.timeSinceLevelLoad+5;
+            dashUsed = true;
+            dash.y = y;
+            dash.x = x;
+            dash.z = z;
             TrailHandler(false, true);
-            m_player.useGravity = false;
-            m_player.AddForce(x, y, z, ForceMode.Force);
-            DashUsed?.Invoke(b_dashUsed);
+            player.useGravity = false;
+            player.AddForce(x, y, z, ForceMode.Force);
+            DashUsed?.Invoke(dashUsed);
             Invoke(nameof(DashOff), 0.5f);
         }
     }
@@ -152,8 +152,8 @@ public class MovementController : MonoBehaviour
     private void DashOff()
     {
         TrailHandler(true, false);
-        m_player.linearVelocity = Vector3.zero;
-        m_player.useGravity = true;
+        player.linearVelocity = Vector3.zero;
+        player.useGravity = true;
     }
 
     private void TrailHandler(bool renderer, bool trailRenderer)
@@ -166,10 +166,10 @@ public class MovementController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == 2)
         {
-            m_savepoint = m_player.transform.position;
-            b_savepoint = true;
-            g_savepoint.transform.position = m_savepoint;
-            g_savepoint.GetComponent<Renderer>().enabled = true;
+            savepointPosition = player.transform.position;
+            savepointActive = true;
+            savepoint.transform.position = savepointPosition;
+            savepoint.GetComponent<Renderer>().enabled = true;
             SavepointActive?.Invoke();
         }
     }
@@ -177,18 +177,18 @@ public class MovementController : MonoBehaviour
     private void GoToSavepoint()
     {
         if (SceneManager.GetActiveScene().buildIndex == 2)
-            m_player.transform.position = m_savepoint;
+            player.transform.position = savepointPosition;
     }
 
     private void DoubleJump()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2 && Time.timeSinceLevelLoad > m_timeDJump)
+        if (SceneManager.GetActiveScene().buildIndex == 2 && Time.timeSinceLevelLoad > timeDJump)
         {
-            m_timeDJump = Time.timeSinceLevelLoad + 5;
-            b_doubleJumpUsed = true;
-            m_player.linearVelocity = Vector3.zero;
-            m_player.AddForce(3f * m_jump * Vector3.up, ForceMode.Force);
-            DoubleJumpUsed?.Invoke(b_doubleJumpUsed);
+            timeDJump = Time.timeSinceLevelLoad + 5;
+            doubleJumpUsed = true;
+            player.linearVelocity = Vector3.zero;
+            player.AddForce(3f * jumpStrength * Vector3.up, ForceMode.Force);
+            DoubleJumpUsed?.Invoke(doubleJumpUsed);
         } 
     }
 
@@ -196,7 +196,7 @@ public class MovementController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Floor")
         {
-            b_jump = true;
+            jumpPossible = true;
         }
     }
 
