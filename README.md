@@ -10,6 +10,13 @@ Gra zawiera dwa poziomy o rosnącym stopniu trudności, gdzie gracz musi pokona�
 
 Poruszanie się:
 - W / A / S / D - ruch piłki do przodu, w lewo, w tył i w prawo
+- Mysz - kontrola kamery
+
+Akcje:
+- Space - skok
+- Shift - dash
+- E - savepoint
+- R - przejście do poziomu drugiego
 
 ## Cel Gry
 
