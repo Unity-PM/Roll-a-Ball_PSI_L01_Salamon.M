@@ -10,7 +10,6 @@ Gra zawiera dwa poziomy o rosnącym stopniu trudności, gdzie gracz musi pokona�
 
 Poruszanie się:
 - W / A / S / D - ruch piłki do przodu, w lewo, w tył i w prawo
-- Myška - kontrola kamery
 
 ## Cel Gry
 
